@@ -1,7 +1,8 @@
-package com.hyundai.stamps;
-import com.hyundai.stamps.RemoteHttpHeader;
+package com.hyundai.stamp;
+import stationdm.euapi.header.RemoteHttpHeader;
 
 public class Main {
+
 	public static void main(String[] args) {
 		System.out.println(System.getProperty("java.library.path"));
 
