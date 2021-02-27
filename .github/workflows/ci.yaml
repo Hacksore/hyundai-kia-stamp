@@ -1,0 +1,23 @@
+name: CI/CD
+
+on: push
+
+jobs:
+  build:
+    name: docker
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout scm
+        uses: actions/checkout@v2
+      - name: docker/build-push
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          repository: hacksore/hks
+          tags: latest
+      - name: docker/run
+        uses: addnab/docker-run-action@v2
+        with:
+          image: hacksore/hks:latest
+          run: "99cfff84-f4e2-4be8-a5ed-e5b755eb6581:1614438506419"
