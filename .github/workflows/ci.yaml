@@ -17,4 +17,4 @@ jobs:
           repository: hacksore/hks
           tags: latest
       - name: docker/run
-        run: "docker run hacksore/hks '99cfff84-f4e2-4be8-a5ed-e5b755eb6581:1614438506419'"
+        run: "docker run hacksore/hks 'list' '99cfff84-f4e2-4be8-a5ed-e5b755eb6581' > stamps.txt"
