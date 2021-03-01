@@ -4,6 +4,6 @@ COPY . /workspace
 WORKDIR /workspace
 
 RUN mvn clean package
-ENV LD_LIBRARY_PATH=/workspace/lib/x86_64
+ENV BASE_PATH=/workspace
 
-ENTRYPOINT java -Djava.library.path=$LD_LIBRARY_PATH -jar /workspace/target/main-1.0.jar $0 $1
+ENTRYPOINT bash -e $BASE_PATH/lib/exec.sh $0 $1 $2

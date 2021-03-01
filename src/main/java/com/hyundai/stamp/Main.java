@@ -17,7 +17,7 @@ public class Main {
 		String clientId = args[1];
 
 		if (command.equalsIgnoreCase("single")) {
-			String stamp = RemoteHttpHeader.getStamp(args[0]);
+			String stamp = RemoteHttpHeader.getStamp(clientId);
 			System.out.println(stamp);
 		}
 

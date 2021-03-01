@@ -10,11 +10,13 @@ All the hard work goes credit to [@neoPix](https://github.com/neoPix)
 Run this to generate a `Stamp` header
 
 ```
-docker run hacksore/hks "<input>"
+docker run hacksore/hks "<hyundai|kia>" "<single|list>" "<input>"
 ```
 
-Example:
+Examples:
 
 ```
-docker run hacksore/hks "99cfff84-f4e2-4be8-a5ed-e5b755eb6581:1614438506419"
+docker run hacksore/hks "hyundai" "single" "99cfff84-f4e2-4be8-a5ed-e5b755eb6581:1614438506419"
+docker run hacksore/hks "hyundai" "list" "99cfff84-f4e2-4be8-a5ed-e5b755eb6581" > list.txt
+docker run hacksore/hks "kia" "list" "99cfff84-f4e2-4be8-a5ed-e5b755eb6581" > list.txt
 ```
