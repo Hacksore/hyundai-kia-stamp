@@ -21,9 +21,11 @@ jobs:
           repository: hacksore/hks
           tags: latest
       - name: docker/run
-        run: "docker run hacksore/hks:latest 'hyundai' 'list' '99cfff84-f4e2-4be8-a5ed-e5b755eb6581' > hyundai.list.txt"
+        run: |
+          docker run hacksore/hks:latest 'hyundai' 'list' '99cfff84-f4e2-4be8-a5ed-e5b755eb6581' > hyundai.list.txt
       - name: docker/run
-        run: "docker run hacksore/hks:latest 'kia' 'list' '693a33fa-c117-43f2-ae3b-61a02d24f417' > kia.list.txt"
+        run: 
+          docker run hacksore/hks:latest 'kia' 'list' '693a33fa-c117-43f2-ae3b-61a02d24f417' > kia.list.txt
       - uses: actions/upload-artifact@v2
         with:
           name: hyundai.stamps
