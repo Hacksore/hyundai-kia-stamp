@@ -23,7 +23,7 @@ public class Main {
 		}
 
 		if (command.equalsIgnoreCase("list")) {
-			System.out.println("Generating 100k stamps...");
+			System.out.println("Generating " + MAX_STAMPS + " stamps...");
 			for(int i=0; i < MAX_STAMPS; i++) {
 				int unixTime = (int) (System.currentTimeMillis() / 1000L) + i;
 				String stamp = RemoteHttpHeader.getStamp(clientId + ":" + unixTime);
