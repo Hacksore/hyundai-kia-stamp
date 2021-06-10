@@ -3,7 +3,7 @@ import java.util.Base64;
 
 public class MyApiConfig {
 
-    public MyApiConfig() {
+    static {
         System.loadLibrary("native-lib");
     }
 

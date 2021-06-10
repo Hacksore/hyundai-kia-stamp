@@ -15,7 +15,7 @@ docker buildx build --platform=linux/arm64 -t hacksore/hks:arm . --load
 
 ### Before you start
 
-This docker is an ARM build, make sure you're running on a compatible machine or in a quemu environment.
+This docker is an ARM build, make sure you're running on a compatible machine or in a quemu environment. Once installed, run the following command to make it work with docker.
 
 ```
 docker run --rm --privileged multiarch/qemu-user-static --reset -p yes

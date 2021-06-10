@@ -1,4 +1,4 @@
-FROM arm32v7/maven:3-adoptopenjdk-16
+FROM arm64v8/maven
 
 COPY . /workspace
 WORKDIR /workspace
