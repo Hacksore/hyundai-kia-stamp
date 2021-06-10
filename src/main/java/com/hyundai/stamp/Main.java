@@ -1,5 +1,5 @@
 package com.hyundai.stamp;
-import stationdm.euapi.header.RemoteHttpHeader;
+import hmns.global.mobile.application.MyApiConfig;
 
 public class Main {
 
@@ -18,7 +18,7 @@ public class Main {
 		String clientId = args[1];
 
 		if (command.equalsIgnoreCase("single")) {
-			String stamp = RemoteHttpHeader.getStamp(clientId);
+			String stamp = MyApiConfig.getStamp(clientId);
 			System.out.println(stamp);
 		}
 
@@ -27,7 +27,7 @@ public class Main {
 			int start = (int) (System.currentTimeMillis() / 1000L);
 			for(int i=0; i < MAX_STAMPS; i++) {
 				int unixTime = start + i * 30;
-				String stamp = RemoteHttpHeader.getStamp(clientId + ":" + unixTime);
+				String stamp = MyApiConfig.getStamp(clientId + ":" + unixTime);
 				System.out.println(stamp);
 			}
 		}
