@@ -1,4 +1,4 @@
-FROM --platform=$BUILDPLATFORM arm64v8/maven
+FROM arm32v7/maven:3-adoptopenjdk-16
 
 COPY . /workspace
 WORKDIR /workspace

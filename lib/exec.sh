@@ -1,14 +1,14 @@
 #!/bin/bash
 
 echo "Running in env: $(uname -m)"
-libs="$BASE_PATH/lib/hyundai/arm64-v8a"
+libs="$BASE_PATH/lib/hyundai/arm"
 
 if [ "$1" = "hyundai" ]
 then
-    libs="$BASE_PATH/lib/hyundai/arm64-v8a"
+    libs="$BASE_PATH/lib/hyundai/arm"
 elif [ "$1" = "kia" ]
 then
-    libs="$BASE_PATH/lib/kia/arm64-v8a"
+    libs="$BASE_PATH/lib/kia/arm"
 else
     echo "First argument must be hyundai or kia"
     exit
