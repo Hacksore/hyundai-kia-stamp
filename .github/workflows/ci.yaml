@@ -22,14 +22,6 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: hacksore/hks
           tags: latest
-      - name: docker/build-push
-        uses: docker/build-push-action@v1
-        if: ${{ github.ref == 'refs/heads/arm' }}
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-          repository: hacksore/hks
-          tags: arm
       - name: docker/run
         if: ${{ github.ref == 'refs/heads/master' }}
         run: |
@@ -48,3 +40,16 @@ jobs:
         with:
           name: kia.stamps
           path: kia.list.txt
+      - name: Set up Docker Buildx for ARM build    
+        if: ${{ github.ref == 'refs/heads/arm' }}
+        uses: crazy-max/ghaction-docker-buildx@v1
+        with:        
+          version: latest
+      - name: Docker Login  for ARM build
+        if: ${{ github.ref == 'refs/heads/arm' }} 
+        run: |
+          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login --username "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+      - name: Run Buildx and push image for ARM build   
+        if: ${{ github.ref == 'refs/heads/arm' }}     
+        run: |        
+          docker buildx build --platform=linux/arm64 -t hacksore/hks:arm . --load --output type=image,push=true
