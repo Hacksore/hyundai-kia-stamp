@@ -52,4 +52,5 @@ jobs:
       - name: Run Buildx and push image for ARM build   
         if: ${{ github.ref == 'refs/heads/arm' }}     
         run: |        
-          docker buildx build --platform=linux/arm64 -t hacksore/hks:arm . --load --output type=image,push=true
+          docker buildx build --platform=linux/arm64 -t hacksore/hks:arm . --load
+          docker push hacksore/hks:arm
