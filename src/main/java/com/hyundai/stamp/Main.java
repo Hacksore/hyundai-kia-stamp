@@ -26,7 +26,7 @@ public class Main {
 
 		if (command.equalsIgnoreCase("list")) {
 			System.out.println("Generating " + MAX_STAMPS + " stamps...");
-			int start = (int) (System.currentTimeMillis() / 1000L) - (STEP_IN_SECONDS * MAX_STAMPS);
+			int start = (int) (System.currentTimeMillis() / 1000L);
 			for(int i=0; i < MAX_STAMPS; i++) {
 				int unixTime = start + i * STEP_IN_SECONDS;
 				String stamp = MyApiConfig.getStamp(clientId + ":" + unixTime);
