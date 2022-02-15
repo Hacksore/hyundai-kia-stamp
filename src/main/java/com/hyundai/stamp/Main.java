@@ -4,7 +4,7 @@ import hmns.global.mobile.application.MyApiConfig;
 public class Main {
 
 	public static int MAX_STAMPS = 1000;
-	public static int STEP_IN_SECONDS = 20;
+	public static int STEP_IN_SECONDS = 120;
 	public static void main(String[] args) {
 		if(args.length == 0) {
 			System.out.println("Please give an input");
