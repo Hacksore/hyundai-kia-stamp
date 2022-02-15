@@ -4,6 +4,7 @@ import stationdm.euapi.header.RemoteHttpHeader;
 public class Main {
 
 	public static int MAX_STAMPS = 1000;
+	public static int STEP_IN_SECONDS = 120;
 	public static void main(String[] args) {
 		if(args.length == 0) {
 			System.out.println("Please give an input");
@@ -24,8 +25,9 @@ public class Main {
 
 		if (command.equalsIgnoreCase("list")) {
 			System.out.println("Generating " + MAX_STAMPS + " stamps...");
+			int start = (int) (System.currentTimeMillis() / 1000L);
 			for(int i=0; i < MAX_STAMPS; i++) {
-				int unixTime = (int) (System.currentTimeMillis() / 1000L) + i;
+				int unixTime = start + i * STEP_IN_SECONDS;
 				String stamp = RemoteHttpHeader.getStamp(clientId + ":" + unixTime);
 				System.out.println(stamp);
 			}
