@@ -144,7 +144,7 @@ AES256_WHITEBOX_DATA *aes256_whitebox_get_data(char *buf,size_t len,char *iv){
 /**************************************************************************/
 AES256_WHITEBOX_DATA *aes;
 char *p,*c;
-    aes=malloc(sizeof(AES256_WHITEBOX_DATA));
+    aes=malloc(sizeof(AES256_WHITEBOX_DATA)); // 749588
     if (!aes){
         printf("Unable to alloc whitebox struct\r\n");
         return NULL;

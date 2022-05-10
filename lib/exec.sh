@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 DATA_PATH=${BASE_PATH:-.}
 
 libPath="${DATA_PATH}/lib/hyundai/arm/libnative-lib.so"

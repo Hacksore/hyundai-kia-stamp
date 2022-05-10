@@ -13,4 +13,4 @@ ENV BASE_PATH /workspace
 COPY ./lib /workspace/lib
 COPY --from=build /workspace/aes_whitebox /workspace/aes_whitebox
 
-ENTRYPOINT bash -e $BASE_PATH/lib/exec.sh $0 $1 $2
+ENTRYPOINT sh -e $BASE_PATH/lib/exec.sh $0 $1 $2
