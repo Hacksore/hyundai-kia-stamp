@@ -5,6 +5,7 @@ on:
     branches:
       - master
       - arm
+      - native
   workflow_dispatch:
 
 jobs:
