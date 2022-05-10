@@ -7,18 +7,7 @@ All the hard work goes credit to [@neoPix](https://github.com/neoPix)
 ### Building
 
 ```
-docker buildx create --name arm-builder
-docker buildx use arm-builder
-docker buildx inspect --bootstrap
-docker buildx build --platform=linux/arm64 -t hacksore/hks:arm . --load
-```
-
-### Before you start
-
-This docker is an ARM build, make sure you're running on a compatible machine or in a quemu environment. Once installed, run the following command to make it work with docker.
-
-```
-docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+docker build -t hacksore/hks .
 ```
 
 ### Usage
@@ -26,7 +15,7 @@ docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
 Run this to generate a `Stamp` header
 
 ```
-docker run hacksore/hks:arm "<hyundai|kia>" "<single|list>" "<input>"
+docker run hacksore/hks:arm "<hyundai|kia>" "<single|list|export>" "<input?>"
 ```
 
 Examples:
@@ -35,4 +24,23 @@ Examples:
 docker run hacksore/hks:arm "hyundai" "single" "014d2225-8495-4735-812d-2616334fd15d:1614438506419"
 docker run hacksore/hks:arm "hyundai" "list" "014d2225-8495-4735-812d-2616334fd15d" > list.txt
 docker run hacksore/hks:arm "kia" "list" "e7bcd186-a5fd-410d-92cb-6876a42288bd" > list.txt
+docker run hacksore/hks:arm "kia" "export" > keys.json
+```
+
+### C Binary tool
+
+#### Build
+
+```
+gcc src/main.c -o aes_whitebox
+```
+
+#### Run
+
+```
+./aes_whitebox ./lib/hyundai/arm/libnative-lib.so iv.ccsp.stamp.eu single '014d2225-8495-4735-812d-2616334fd15d:1614438506419' # Generates one given stamp
+./aes_whitebox ./lib/hyundai/arm/libnative-lib.so iv.ccsp.stamp.eu list '014d2225-8495-4735-812d-2616334fd15d' # Generates a list of 1000 stamps for Hyunday
+./aes_whitebox ./lib/kia/arm/libnative-lib.so iv.ccsp.stamp.eu list 'e7bcd186-a5fd-410d-92cb-6876a42288bd' # Generates a list of 1000 stamps for Kia
+./aes_whitebox ./lib/kia/arm/libnative-lib.so iv.ccsp.stamp.eu export # Exports the whitebox key data
+
 ```
