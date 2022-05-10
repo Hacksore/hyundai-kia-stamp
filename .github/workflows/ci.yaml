@@ -16,12 +16,12 @@ jobs:
         uses: actions/checkout@v2
       - name: docker/build-push
         uses: docker/build-push-action@v1
-        if: ${{ github.ref == 'refs/heads/master' }}
+        if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/native' }}
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: hacksore/hks
-          tags: latest
+          tags: ${{ github.ref == 'refs/heads/native' && 'native' || 'latest' }}
       - name: docker/run
         if: ${{ github.ref == 'refs/heads/master' }}
         run: |
