@@ -292,7 +292,9 @@ void aes_whitebox_encrypt_cfb_and_print(const uint8_t iv[16], const uint8_t* m, 
 
     aes_whitebox_encrypt_cfb(aes->iv,m,len,c,aes);
 
-    printf("%s", b64_encode(c, len));
+    char *b64 = b64_encode(c, len);
+    printf("%s", b64);
+    free(b64);
     free(c);
 }
 
