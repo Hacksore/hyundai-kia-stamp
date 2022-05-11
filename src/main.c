@@ -265,7 +265,7 @@ void Cipher(uint8_t in[16],AES256_WHITEBOX_DATA *aes){
 }
 
 /**************************************************************************/
-void aes_whitebox_encrypt_cfb(const uint8_t iv[16], const uint8_t* m, size_t len, uint8_t* c, AES256_WHITEBOX_DATA *aes){
+void aes_whitebox_encrypt_cfb(const uint8_t iv[16], const uint8_t* m, size_t len, uint8_t* c, AES256_WHITEBOX_DATA *aes, bool export_cfb){
 /**************************************************************************/
 uint8_t cfb_blk[16];
 
@@ -275,12 +275,17 @@ uint8_t cfb_blk[16];
     for (size_t i = 0; i < len; i++) {
         if ((i & 0xf) == 0)
             Cipher(cfb_blk,aes);
+        if (export_cfb) {
+            c[i] = cfb_blk[i & 0xf];
+        }
         cfb_blk[i & 0xf] ^= m[i];
-        c[i] = cfb_blk[i & 0xf];
+        if (!export_cfb) {
+            c[i] = cfb_blk[i & 0xf];
+        }
     }
 }
 
-void aes_whitebox_encrypt_cfb_and_print(const uint8_t iv[16], const uint8_t* m, size_t len, AES256_WHITEBOX_DATA *aes) {
+void aes_whitebox_encrypt_cfb_and_print(const uint8_t iv[16], const uint8_t* m, size_t len, AES256_WHITEBOX_DATA *aes, bool export_cfb) {
     size_t i;
     uint8_t *c;
     c=malloc(len);
@@ -290,7 +295,7 @@ void aes_whitebox_encrypt_cfb_and_print(const uint8_t iv[16], const uint8_t* m, 
         return;
     }
 
-    aes_whitebox_encrypt_cfb(aes->iv,m,len,c,aes);
+    aes_whitebox_encrypt_cfb(aes->iv,m,len,c,aes, export_cfb);
 
     char *b64 = b64_encode(c, len);
     printf("%s", b64);
@@ -317,7 +322,7 @@ AES256_WHITEBOX_DATA *aes;
         printf("\r\n");
         printf("       binary_file : file for recovering AES whitebox compiled data\r\n");
         printf("       iv          : initialisation vector to be searched on binary file and used as IV\r\n");
-        printf("       mode        : The generation mode you want (single | list | export)\r\n");
+        printf("       mode        : The generation mode you want (single | list | export | dumpCFB)\r\n");
         printf("       input       : data to encrypt, only used for single and list\r\n");
         return 1;
     }
@@ -351,9 +356,12 @@ AES256_WHITEBOX_DATA *aes;
     }
     free(buf);
 
-
-    if (strcmp(argv[3], "single") == 0) {
-        aes_whitebox_encrypt_cfb_and_print(aes->iv,M,strlen(M),aes);
+    if (strcmp(argv[3], "dumpCFB") == 0) {
+        aes_whitebox_encrypt_cfb_and_print(aes->iv,M,strlen(M),aes, true);
+        printf("\r\n");
+    }
+    else if (strcmp(argv[3], "single") == 0) {
+        aes_whitebox_encrypt_cfb_and_print(aes->iv,M,strlen(M),aes, false);
         printf("\r\n");
     }
     else if (strcmp(argv[3], "list") == 0) {
@@ -363,7 +371,7 @@ AES256_WHITEBOX_DATA *aes;
             char rawStamp[1000];
             long long currentStamp = initialTime + (LIST_STEP_MS * loop);
             sprintf(rawStamp, "%s:%lld", M, currentStamp);
-            aes_whitebox_encrypt_cfb_and_print(aes->iv,rawStamp,strlen(rawStamp),aes);
+            aes_whitebox_encrypt_cfb_and_print(aes->iv,rawStamp,strlen(rawStamp),aes, false);
             printf("\r\n");
         }
     }
