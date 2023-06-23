@@ -1,7 +1,7 @@
 build:
-	docker build --progress=plain -t hacksore/hks:local .
+	docker buildx build --platform linux/amd64  --progress=plain -t hacksore/hks:local .
 test:
-	docker run hacksore/hks:local "hyundai" "single" "99cfff84-f4e2-4be8-a5ed-e5b755eb6581:1614438506420"
+	docker run --platform linux/amd64 hacksore/hks:local "hyundai" "single" "99cfff84-f4e2-4be8-a5ed-e5b755eb6581:1614438506420"
 testKia:
 	docker run hacksore/hks:local "kia" "single" "693a33fa-c117-43f2-ae3b-61a02d24f417:1614438506420"
 list:
