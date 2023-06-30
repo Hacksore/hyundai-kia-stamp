@@ -7,7 +7,7 @@ All the hard work goes credit to [@neoPix](https://github.com/neoPix)
 ### Building
 
 ```
-docker build -t hacksore/hks .
+docker build -t hacksore/hks:native .
 ```
 
 ### Usage
@@ -15,17 +15,17 @@ docker build -t hacksore/hks .
 Run this to generate a `Stamp` header
 
 ```
-docker run hacksore/hks:arm "<hyundai|kia>" "<single|list|export>" "<input?>"
+docker run hacksore/hks:native "<hyundai|kia>" "<single|list|export>" "<input?>"
 ```
 
 Examples:
 
 ```
-docker run hacksore/hks:arm "hyundai" "single" "014d2225-8495-4735-812d-2616334fd15d:1614438506419"
-docker run hacksore/hks:arm "hyundai" "list" "014d2225-8495-4735-812d-2616334fd15d" > list.txt
-docker run hacksore/hks:arm "kia" "list" "e7bcd186-a5fd-410d-92cb-6876a42288bd" > list.txt
-docker run hacksore/hks:arm "kia" "export" > keys.json
-docker run hacksore/hks:arm "kia" "dumpCFB" "014d2225-8495-4735-812d-2616334fd15d:1614438506419" > CFB.b64.txt
+docker run hacksore/hks:native "hyundai" "single" "014d2225-8495-4735-812d-2616334fd15d:1614438506419"
+docker run hacksore/hks:native "hyundai" "list" "014d2225-8495-4735-812d-2616334fd15d" > list.txt
+docker run hacksore/hks:native "kia" "list" "e7bcd186-a5fd-410d-92cb-6876a42288bd" > list.txt
+docker run hacksore/hks:native "kia" "export" > keys.json
+docker run hacksore/hks:native "kia" "dumpCFB" "014d2225-8495-4735-812d-2616334fd15d:1614438506419" > CFB.b64.txt
 ```
 
 ### C Binary tool
