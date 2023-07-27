@@ -1,56 +1,35 @@
 name: CI/CD
 
-on: 
+on:
   push:
     branches:
-      - master
-      - arm
+      - '*'
   workflow_dispatch:
+
 
 jobs:
   build:
     name: docker
     runs-on: ubuntu-latest
     steps:
-      - name: checkout scm
-        uses: actions/checkout@v2
-      - name: docker/build-push
-        uses: docker/build-push-action@v1
-        if: ${{ github.ref == 'refs/heads/master' }}
+      - name: Checkout Code
+        uses: actions/checkout@v3
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-          repository: hacksore/hks
-          tags: latest
-      - name: docker/run
-        if: ${{ github.ref == 'refs/heads/master' }}
-        run: |
-          docker run hacksore/hks:latest 'hyundai' 'list' '99cfff84-f4e2-4be8-a5ed-e5b755eb6581' > hyundai.list.txt
-      - name: docker/run
-        if: ${{ github.ref == 'refs/heads/master' }}
-        run: 
-          docker run hacksore/hks:latest 'kia' 'list' '693a33fa-c117-43f2-ae3b-61a02d24f417' > kia.list.txt
-      - uses: actions/upload-artifact@v2
-        if: ${{ github.ref == 'refs/heads/master' }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+      - name: Build and push image
+        id: docker_build
+        uses: docker/build-push-action@v4
         with:
-          name: hyundai.stamps
-          path: hyundai.list.txt
-      - uses: actions/upload-artifact@v2
-        if: ${{ github.ref == 'refs/heads/master' }}
-        with:
-          name: kia.stamps
-          path: kia.list.txt
-      - name: Set up Docker Buildx for ARM build    
-        if: ${{ github.ref == 'refs/heads/arm' }}
-        uses: crazy-max/ghaction-docker-buildx@v1
-        with:        
-          version: latest
-      - name: Docker Login  for ARM build
-        if: ${{ github.ref == 'refs/heads/arm' }} 
-        run: |
-          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login --username "${{ secrets.DOCKER_USERNAME }}" --password-stdin
-      - name: Run Buildx and push image for ARM build   
-        if: ${{ github.ref == 'refs/heads/arm' }}     
-        run: |        
-          docker buildx build --platform=linux/arm64 -t hacksore/hks:arm . --load
-          docker push hacksore/hks:arm
+          platforms: linux/arm/v8
+          push: true
+          context: .
+          build-args: "--progress=plain"
+          tags: hacksore/hks:${{ github.ref_name }}
+
