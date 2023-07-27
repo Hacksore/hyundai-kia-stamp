@@ -23,7 +23,6 @@ jobs:
         id: docker_build
         uses: docker/build-push-action@v3
         with:
-          platforms: linux/amd64
           push: true
           context: .
           build-args: "--progress=plain"
