@@ -2,7 +2,7 @@
 DATA_PATH=${BASE_PATH:-.}
 
 libPath="${DATA_PATH}/lib/hyundai/arm/libnative-lib.so"
-iv='iv.ccsp.stamp.eu'
+iv='iv.ccsp.stamp.au'
 
 if [ "$1" = "hyundai" ]
 then
